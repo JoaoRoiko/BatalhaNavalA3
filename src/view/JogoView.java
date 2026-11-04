@@ -8,6 +8,12 @@ import model.Tabuleiro;
  * Entrada e saída do jogo no console.
  */
 public class JogoView {
+    private static final String VERMELHO = "\u001B[31m";
+    private static final String DOURADO = "\u001B[33m";
+    private static final String AZUL_ESCURO = "\u001B[34m";
+    private static final String AZUL_CLARO = "\u001B[94m";
+    private static final String RESET_COR = "\u001B[0m";
+
     private final Scanner scanner;
 
     public JogoView() {
@@ -38,7 +44,7 @@ public class JogoView {
             int linha = lerInteiro("Linha do disparo (1-10): ", 1, 10) - 1;
             int coluna = lerInteiro("Coluna do disparo (1-10): ", 1, 10) - 1;
             if (tabuleiroAlvo.tiroDisponivel(linha, coluna)) {
-                return new int[]{linha, coluna};
+                return new int[] { linha, coluna };
             }
             exibirMensagem("Essa posição já foi atingida. Escolha outra.");
         }
@@ -80,13 +86,19 @@ public class JogoView {
     private void exibirGrade(char[][] grade) {
         System.out.print("    ");
         for (int coluna = 1; coluna <= Tabuleiro.COLUNAS; coluna++) {
-            System.out.printf("%2d ", coluna);
+            System.out.print(coluna < 10 ? " " : "");
+            System.out.print(DOURADO + coluna + RESET_COR + " ");
         }
         System.out.println();
         for (int linha = 0; linha < Tabuleiro.LINHAS; linha++) {
-            System.out.printf("%2d  ", linha + 1);
+            System.out.print((linha + 1 < 10 ? " " : "")
+                    + DOURADO + (linha + 1) + RESET_COR + "  ");
             for (int coluna = 0; coluna < Tabuleiro.COLUNAS; coluna++) {
-                System.out.print(" " + grade[linha][coluna] + " ");
+                char celula = grade[linha][coluna];
+                String cor = celula == Tabuleiro.ACERTO ? VERMELHO
+                        : celula == Tabuleiro.ERRO ? AZUL_ESCURO
+                                : celula == Tabuleiro.AGUA ? AZUL_CLARO : "";
+                System.out.print(" " + cor + celula + (cor.isEmpty() ? "" : RESET_COR) + " ");
             }
             System.out.println();
         }

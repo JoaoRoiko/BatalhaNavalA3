@@ -88,10 +88,11 @@ public abstract class Unidade {
     }
 
     /**
-     * Restaura os dados lidos do arquivo de save depois de validar sua consistência.
+     * Restaura os dados lidos do arquivo de save depois de validar sua
+     * consistência.
      */
     public void restaurarEstado(int tamanhoSalvo, int[] posicoesSalvas,
-                                int[] acertosSalvos, int partesSalvas, boolean afundadoSalvo) {
+            int[] acertosSalvos, int partesSalvas, boolean afundadoSalvo) {
         if (tamanhoSalvo != tamanho || posicoesSalvas == null || posicoesSalvas.length != tamanho
                 || acertosSalvos == null || partesSalvas != acertosSalvos.length
                 || partesSalvas < 0 || partesSalvas > tamanho

@@ -20,8 +20,8 @@ public class Computador extends Jogador {
         List<int[]> posicionamentos = new ArrayList<int[]>();
         for (int linha = 0; linha < Tabuleiro.LINHAS; linha++) {
             for (int coluna = 0; coluna < Tabuleiro.COLUNAS; coluna++) {
-                posicionamentos.add(new int[]{linha, coluna, 1});
-                posicionamentos.add(new int[]{linha, coluna, 0});
+                posicionamentos.add(new int[] { linha, coluna, 1 });
+                posicionamentos.add(new int[] { linha, coluna, 0 });
             }
         }
 
@@ -46,7 +46,7 @@ public class Computador extends Jogador {
         for (int linha = 0; linha < Tabuleiro.LINHAS; linha++) {
             for (int coluna = 0; coluna < Tabuleiro.COLUNAS; coluna++) {
                 if (alvo.tiroDisponivel(linha, coluna)) {
-                    disponiveis.add(new int[]{linha, coluna});
+                    disponiveis.add(new int[] { linha, coluna });
                 }
             }
         }

@@ -84,7 +84,7 @@ public class JogoController {
                 break;
             }
         }
-        return new int[]{linha, coluna, horizontal ? 1 : 0};
+        return new int[] { linha, coluna, horizontal ? 1 : 0 };
     }
 
     private void executarPartida() {
