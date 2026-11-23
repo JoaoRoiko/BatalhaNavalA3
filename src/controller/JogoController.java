@@ -62,6 +62,9 @@ public class JogoController {
     private void novaPartida() {
         jogador = new Jogador("Jogador", "J");
         computador = new Computador();
+        int nivel = view.exibirMenuDificuldade();
+        computador.configurarDificuldade(nivel);
+        view.exibirMensagem("🎚️ Dificuldade escolhida: " + JogoView.nomeDificuldade(nivel));
         view.exibirMensagem("🚢 Posicione seus três navios. As coordenadas começam em 1.");
         for (Navio navio : jogador.getNavios()) {
             while (true) {
@@ -139,6 +142,7 @@ public class JogoController {
                 + ", coluna " + (tiro[1] + 1) + ".");
         Tabuleiro.ResultadoTiro resultado = jogador.getTabuleiro().atirar(tiro[0], tiro[1]);
         view.exibirResultadoTiro(computador.getNome(), resultado);
+        computador.registrarResultado(resultado, tiro[0], tiro[1]);
         vez = "J";
     }
 

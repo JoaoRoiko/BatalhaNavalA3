@@ -55,6 +55,26 @@ public class JogoView {
         return lerInteiro("👉 Escolha: ", 1, 3);
     }
 
+    public int exibirMenuDificuldade() {
+        System.out.println();
+        System.out.println(NEGRITO + "⚙️ DIFICULDADE DO COMPUTADOR" + RESET_COR);
+        System.out.println("   1 - 🐣 Fácil (tiros aleatórios)");
+        System.out.println("   2 - 🎯 Médio (às vezes mira perto do acerto)");
+        System.out.println("   3 - 😈 Difícil (sempre mira perto do acerto)");
+        return lerInteiro("👉 Escolha: ", 1, 3);
+    }
+
+    public static String nomeDificuldade(int nivel) {
+        switch (nivel) {
+            case 1:
+                return "🐣 Fácil";
+            case 3:
+                return "😈 Difícil";
+            default:
+                return "🎯 Médio";
+        }
+    }
+
     public void exibirMensagem(String mensagem) {
         System.out.println(mensagem);
     }

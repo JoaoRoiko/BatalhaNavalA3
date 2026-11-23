@@ -9,11 +9,42 @@ import java.util.Random;
  * Participante controlado pelo computador.
  */
 public class Computador extends Jogador {
+    public static final int FACIL = 1;
+    public static final int MEDIO = 2;
+    public static final int DIFICIL = 3;
+
     private final Random aleatorio;
+    private int nivel;
+    private int[] ultimoAcerto;
 
     public Computador() {
         super("Computador", "C");
         aleatorio = new Random();
+        nivel = MEDIO;
+        ultimoAcerto = null;
+    }
+
+    public void configurarDificuldade(int nivel) {
+        if (nivel < FACIL || nivel > DIFICIL) {
+            throw new IllegalArgumentException("Nível de dificuldade inválido.");
+        }
+        this.nivel = nivel;
+        this.ultimoAcerto = null;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    /**
+     * Guarda o último ponto certeiro para que o computador possa mirar em volta dele.
+     */
+    public void registrarResultado(Tabuleiro.ResultadoTiro resultado, int linha, int coluna) {
+        if (resultado == Tabuleiro.ResultadoTiro.AFUNDADO) {
+            ultimoAcerto = null;
+        } else if (resultado == Tabuleiro.ResultadoTiro.ACERTO) {
+            ultimoAcerto = new int[] { linha, coluna };
+        }
     }
 
     public void posicionarNaviosAutomaticamente() {
@@ -42,6 +73,46 @@ public class Computador extends Jogador {
     }
 
     public int[] escolherTiro(Tabuleiro alvo) {
+        if (deveMirarNoEntorno()) {
+            int[] vizinho = escolherVizinhoDoAcerto(alvo);
+            if (vizinho != null) {
+                return vizinho;
+            }
+        }
+        return escolherTiroAleatorio(alvo);
+    }
+
+    private boolean deveMirarNoEntorno() {
+        if (ultimoAcerto == null) {
+            return false;
+        }
+        // No difícil sempre insiste em volta do acerto; no médio insiste na metade das vezes.
+        return nivel == DIFICIL || (nivel == MEDIO && aleatorio.nextBoolean());
+    }
+
+    private int[] escolherVizinhoDoAcerto(Tabuleiro alvo) {
+        int linha = ultimoAcerto[0];
+        int coluna = ultimoAcerto[1];
+        int[][] vizinhos = {
+                { linha - 1, coluna },
+                { linha + 1, coluna },
+                { linha, coluna - 1 },
+                { linha, coluna + 1 }
+        };
+        List<int[]> disponiveis = new ArrayList<int[]>();
+        for (int[] vizinho : vizinhos) {
+            if (alvo.tiroDisponivel(vizinho[0], vizinho[1])) {
+                disponiveis.add(vizinho);
+            }
+        }
+        if (disponiveis.isEmpty()) {
+            ultimoAcerto = null;
+            return null;
+        }
+        return disponiveis.get(aleatorio.nextInt(disponiveis.size()));
+    }
+
+    private int[] escolherTiroAleatorio(Tabuleiro alvo) {
         List<int[]> disponiveis = new ArrayList<int[]>();
         for (int linha = 0; linha < Tabuleiro.LINHAS; linha++) {
             for (int coluna = 0; coluna < Tabuleiro.COLUNAS; coluna++) {
