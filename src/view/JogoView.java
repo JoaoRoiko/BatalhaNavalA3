@@ -31,6 +31,12 @@ public class JogoView {
         System.out.println(DOURADO + "==============================================" + RESET_COR);
     }
 
+    public void exibirPlacar(int vitorias, int derrotas) {
+        System.out.println();
+        System.out.println(DOURADO + "🏆 vitórias: " + vitorias + RESET_COR
+                + "   " + VERMELHO + "💀 derrotas: " + derrotas + RESET_COR);
+    }
+
     public int exibirMenuInicial() {
         System.out.println();
         System.out.println(NEGRITO + "🏠 MENU PRINCIPAL" + RESET_COR);

@@ -13,6 +13,7 @@ import model.Navio;
 import model.Tabuleiro;
 import model.Unidade;
 import util.LeitorArquivo;
+import util.Placar;
 import view.JogoView;
 
 /**
@@ -20,14 +21,17 @@ import view.JogoView;
  */
 public class JogoController {
     private static final Path ARQUIVO_SAVE = Paths.get("batalha_naval_save.txt");
+    private static final Path ARQUIVO_PLACAR = Paths.get("batalha_naval_placar.txt");
 
     private final JogoView view;
+    private final Placar placar;
     private Jogador jogador;
     private Computador computador;
     private String vez;
 
     public JogoController() {
         view = new JogoView();
+        placar = new Placar(ARQUIVO_PLACAR);
     }
 
     public static void main(String[] args) {
@@ -38,6 +42,7 @@ public class JogoController {
         view.exibirBoasVindas();
         boolean executando = true;
         while (executando) {
+            view.exibirPlacar(placar.getVitorias(), placar.getDerrotas());
             int opcao = view.exibirMenuInicial();
             if (opcao == 0) {
                 executando = false;
@@ -113,8 +118,10 @@ public class JogoController {
         view.exibirTabuleiros(jogador.getTabuleiro(), computador.getTabuleiro());
         if (computador.perdeu()) {
             view.exibirResultadoFinal(true);
+            placar.registrarVitoria();
         } else {
             view.exibirResultadoFinal(false);
+            placar.registrarDerrota();
         }
     }
 

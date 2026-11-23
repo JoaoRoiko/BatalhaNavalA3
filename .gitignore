@@ -5,6 +5,9 @@ out/
 # Arquivo de save do jogo
 batalha_naval_save.txt
 
+# Placar acumulado de vitorias e derrotas
+batalha_naval_placar.txt
+
 # Configuracoes de IDE
 .idea/
 *.iml
