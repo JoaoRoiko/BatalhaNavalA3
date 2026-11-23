@@ -1,0 +1,10 @@
+# Arquivos compilados (gerados pelo javac / pela IDE)
+out/
+*.class
+
+# Arquivo de save do jogo
+batalha_naval_save.txt
+
+# Configuracoes de IDE
+.idea/
+*.iml
