@@ -68,6 +68,7 @@ public class JogoController {
                 }
                 view.exibirMensagem("   ❌ Posição inválida ou ocupada. Tente novamente.");
             }
+            view.exibirTabuleiroPosicionamento(jogador.getTabuleiro());
         }
         computador.posicionarNaviosAutomaticamente();
         vez = "J";

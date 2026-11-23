@@ -78,6 +78,12 @@ public class JogoView {
         exibirGrade(tabuleiroComputador.getGradeVisivel(false));
     }
 
+    public void exibirTabuleiroPosicionamento(Tabuleiro tabuleiro) {
+        System.out.println();
+        System.out.println(CIANO + NEGRITO + "🚢 SEUS NAVIOS ATÉ AGORA" + RESET_COR);
+        exibirGrade(tabuleiro.getGradeVisivel(true));
+    }
+
     public void exibirResultadoTiro(String atirador, Tabuleiro.ResultadoTiro resultado) {
         switch (resultado) {
             case AGUA:
@@ -141,7 +147,7 @@ public class JogoView {
         exibirLegenda();
     }
 
-    private void exibirLegenda() {
+    public void exibirLegenda() {
         System.out.println("     " + AZUL_CLARO + "~" + RESET_COR + " água   "
                 + VERDE + "N" + RESET_COR + " seu navio   "
                 + VERMELHO + NEGRITO + "X" + RESET_COR + " acerto   "
