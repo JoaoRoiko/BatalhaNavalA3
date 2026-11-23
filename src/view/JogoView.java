@@ -65,9 +65,15 @@ public class JogoView {
     }
 
     public void exibirTabuleiros(Tabuleiro tabuleiroJogador, Tabuleiro tabuleiroComputador) {
-        System.out.println("\nSeu tabuleiro:");
+        System.out.println();
+        System.out.println(CIANO + NEGRITO + "🚢 SEU TABULEIRO" + RESET_COR + "   "
+                + VERMELHO + "navios afundados: " + tabuleiroJogador.quantidadeNaviosAfundados()
+                + "/3" + RESET_COR);
         exibirGrade(tabuleiroJogador.getGradeVisivel(true));
-        System.out.println("\nTabuleiro do computador (seus disparos):");
+        System.out.println();
+        System.out.println(AZUL_CLARO + NEGRITO + "🎯 TABULEIRO DO COMPUTADOR" + RESET_COR + "   "
+                + VERDE + "navios afundados: " + tabuleiroComputador.quantidadeNaviosAfundados()
+                + "/3" + RESET_COR);
         exibirGrade(tabuleiroComputador.getGradeVisivel(false));
     }
 
@@ -107,22 +113,29 @@ public class JogoView {
         System.out.print("    ");
         for (int coluna = 1; coluna <= Tabuleiro.COLUNAS; coluna++) {
             System.out.print(coluna < 10 ? " " : "");
-            System.out.print(DOURADO + coluna + RESET_COR + " ");
+            System.out.print(DOURADO + NEGRITO + coluna + RESET_COR + " ");
         }
         System.out.println();
         for (int linha = 0; linha < Tabuleiro.LINHAS; linha++) {
             System.out.print((linha + 1 < 10 ? " " : "")
-                    + DOURADO + (linha + 1) + RESET_COR + "  ");
+                    + DOURADO + NEGRITO + (linha + 1) + RESET_COR + "  ");
             for (int coluna = 0; coluna < Tabuleiro.COLUNAS; coluna++) {
                 char celula = grade[linha][coluna];
-                String cor = celula == Tabuleiro.ACERTO ? VERMELHO
+                String cor = celula == Tabuleiro.ACERTO ? VERMELHO + NEGRITO
                         : celula == Tabuleiro.ERRO ? AZUL_ESCURO
-                                : celula == Tabuleiro.AGUA ? AZUL_CLARO : "";
-                System.out.print(" " + cor + celula + (cor.isEmpty() ? "" : RESET_COR) + " ");
+                                : celula == Tabuleiro.AGUA ? AZUL_CLARO : VERDE;
+                System.out.print(" " + cor + celula + RESET_COR + " ");
             }
             System.out.println();
         }
-        System.out.println("Legenda: ~ água, N navio, X acerto, o tiro na água.");
+        exibirLegenda();
+    }
+
+    private void exibirLegenda() {
+        System.out.println("     " + AZUL_CLARO + "~" + RESET_COR + " água   "
+                + VERDE + "N" + RESET_COR + " seu navio   "
+                + VERMELHO + NEGRITO + "X" + RESET_COR + " acerto   "
+                + AZUL_ESCURO + "o" + RESET_COR + " tiro na água");
     }
 
     private int lerInteiro(String mensagem, int minimo, int maximo) {
