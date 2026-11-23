@@ -35,6 +35,7 @@ public class JogoController {
     }
 
     private void iniciar() {
+        view.exibirBoasVindas();
         boolean executando = true;
         while (executando) {
             int opcao = view.exibirMenuInicial();
@@ -49,23 +50,23 @@ public class JogoController {
                 }
             }
         }
-        view.exibirMensagem("Até a próxima!");
+        view.exibirMensagem("👋 Até a próxima!");
         view.fechar();
     }
 
     private void novaPartida() {
         jogador = new Jogador("Jogador", "J");
         computador = new Computador();
-        view.exibirMensagem("Posicione seus três navios. Coordenadas começam em 1.");
+        view.exibirMensagem("🚢 Posicione seus três navios. As coordenadas começam em 1.");
         for (Navio navio : jogador.getNavios()) {
             while (true) {
-                view.exibirMensagem("Posicione o navio " + navio.getId() + " (tamanho 3).");
+                view.exibirMensagem("   🚢 Posicione o navio " + navio.getId() + " (tamanho 3).");
                 int[] coordenadas = lerPosicaoNavio();
                 if (navio.posicionar(jogador.getTabuleiro(), coordenadas[0], coordenadas[1],
                         coordenadas[2] == 1)) {
                     break;
                 }
-                view.exibirMensagem("Posição inválida ou ocupada. Tente novamente.");
+                view.exibirMensagem("   ❌ Posição inválida ou ocupada. Tente novamente.");
             }
         }
         computador.posicionarNaviosAutomaticamente();
@@ -77,8 +78,8 @@ public class JogoController {
         int coluna = lerCoordenada("Coluna inicial (1-10): ");
         boolean horizontal;
         while (true) {
-            view.exibirMensagem("Orientação: H para horizontal ou V para vertical.");
-            String orientacao = view.lerEntrada("Orientação: ").trim();
+            view.exibirMensagem("   🧭 Orientação: H para horizontal ou V para vertical.");
+            String orientacao = view.lerEntrada("   🧭 Orientação: ").trim();
             if ("H".equalsIgnoreCase(orientacao) || "V".equalsIgnoreCase(orientacao)) {
                 horizontal = "H".equalsIgnoreCase(orientacao);
                 break;
@@ -110,14 +111,14 @@ public class JogoController {
 
         view.exibirTabuleiros(jogador.getTabuleiro(), computador.getTabuleiro());
         if (computador.perdeu()) {
-            view.exibirMensagem("Parabéns! Você venceu a batalha naval!");
+            view.exibirResultadoFinal(true);
         } else {
-            view.exibirMensagem("Todos os seus navios foram afundados. O computador venceu.");
+            view.exibirResultadoFinal(false);
         }
     }
 
     private void turnoJogador() {
-        view.exibirMensagem("\nSua vez de atirar.");
+        view.exibirMensagem("\n🎯 Sua vez de atirar!");
         int[] tiro = view.solicitarTiro(computador.getTabuleiro());
         Tabuleiro.ResultadoTiro resultado = computador.getTabuleiro().atirar(tiro[0], tiro[1]);
         view.exibirResultadoTiro(jogador.getNome(), resultado);
@@ -126,7 +127,7 @@ public class JogoController {
 
     private void turnoComputador() {
         int[] tiro = computador.escolherTiro(jogador.getTabuleiro());
-        view.exibirMensagem("\nVez do computador: linha " + (tiro[0] + 1)
+        view.exibirMensagem("\n🤖 Vez do computador: linha " + (tiro[0] + 1)
                 + ", coluna " + (tiro[1] + 1) + ".");
         Tabuleiro.ResultadoTiro resultado = jogador.getTabuleiro().atirar(tiro[0], tiro[1]);
         view.exibirResultadoTiro(computador.getNome(), resultado);
@@ -147,10 +148,10 @@ public class JogoController {
             for (Navio navio : computador.getNavios()) {
                 escreverNavio(escritor, navio);
             }
-            view.exibirMensagem("Partida salva em: " + ARQUIVO_SAVE.toAbsolutePath());
+            view.exibirMensagem("💾 Partida salva em: " + ARQUIVO_SAVE.toAbsolutePath());
             return true;
         } catch (IOException excecao) {
-            view.exibirMensagem("Não foi possível salvar a partida: " + excecao.getMessage());
+            view.exibirMensagem("❌ Não foi possível salvar a partida: " + excecao.getMessage());
             return false;
         }
     }
@@ -195,10 +196,10 @@ public class JogoController {
             jogador = jogadorCarregado;
             computador = computadorCarregado;
             vez = vezCarregada;
-            view.exibirMensagem("Partida carregada com sucesso.");
+            view.exibirMensagem("📂 Partida carregada com sucesso.");
             return true;
         } catch (IOException | IllegalArgumentException excecao) {
-            view.exibirMensagem("Não foi possível carregar a partida: " + excecao.getMessage());
+            view.exibirMensagem("❌ Não foi possível carregar a partida: " + excecao.getMessage());
             return false;
         }
     }
@@ -214,7 +215,7 @@ public class JogoController {
             } catch (NumberFormatException excecao) {
                 // Uma nova tentativa é solicitada abaixo.
             }
-            view.exibirMensagem("Digite um número entre 1 e 10.");
+            view.exibirMensagem("   ❌ Digite um número entre 1 e 10.");
         }
     }
 

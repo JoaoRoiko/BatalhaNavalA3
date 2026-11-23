@@ -54,13 +54,14 @@ public class JogoView {
     }
 
     public int[] solicitarTiro(Tabuleiro tabuleiroAlvo) {
+        System.out.println("   💡 Dica: linhas e colunas vão de 1 a 10.");
         while (true) {
-            int linha = lerInteiro("Linha do disparo (1-10): ", 1, 10) - 1;
-            int coluna = lerInteiro("Coluna do disparo (1-10): ", 1, 10) - 1;
+            int linha = lerInteiro("   🎯 Linha do disparo (1-10): ", 1, 10) - 1;
+            int coluna = lerInteiro("   🎯 Coluna do disparo (1-10): ", 1, 10) - 1;
             if (tabuleiroAlvo.tiroDisponivel(linha, coluna)) {
                 return new int[] { linha, coluna };
             }
-            exibirMensagem("Essa posição já foi atingida. Escolha outra.");
+            exibirMensagem("   🚫 Essa posição já foi atingida. Escolha outra.");
         }
     }
 
@@ -99,6 +100,15 @@ public class JogoView {
         System.out.println(VERMELHO + "           \\    💥    /" + RESET_COR);
         System.out.println(VERMELHO + "            💥  🚢  💥" + RESET_COR);
         System.out.println(VERMELHO + "           /    💥    \\" + RESET_COR);
+    }
+
+    public void exibirResultadoFinal(boolean vitoria) {
+        System.out.println();
+        if (vitoria) {
+            System.out.println(DOURADO + NEGRITO + "🏆 PARABÉNS! VOCÊ VENCEU A BATALHA NAVAL! 🏆" + RESET_COR);
+        } else {
+            System.out.println(VERMELHO + NEGRITO + "💀 Todos os seus navios foram afundados. O computador venceu." + RESET_COR);
+        }
     }
 
     public void fechar() {
