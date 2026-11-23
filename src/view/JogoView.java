@@ -72,21 +72,27 @@ public class JogoView {
     }
 
     public void exibirResultadoTiro(String atirador, Tabuleiro.ResultadoTiro resultado) {
-        String mensagem;
         switch (resultado) {
             case AGUA:
-                mensagem = "Água.";
+                exibirMensagem("   " + AZUL_CLARO + "🌊 " + atirador + ": água! O tiro caiu no mar." + RESET_COR);
                 break;
             case ACERTO:
-                mensagem = "Acertou um navio!";
+                exibirMensagem("   " + VERMELHO + NEGRITO + "💥 " + atirador + ": ACERTOU UM NAVIO!" + RESET_COR);
                 break;
             case AFUNDADO:
-                mensagem = "Navio afundado!";
+                exibirMensagem("   " + VERMELHO + NEGRITO + "💥 " + atirador
+                        + ": BOOOOM! NAVIO AFUNDADO! 🔥" + RESET_COR);
+                exibirExplosao();
                 break;
             default:
-                mensagem = "Disparo inválido.";
+                exibirMensagem("   ❌ Disparo inválido.");
         }
-        exibirMensagem(atirador + ": " + mensagem);
+    }
+
+    private void exibirExplosao() {
+        System.out.println(VERMELHO + "           \\    💥    /" + RESET_COR);
+        System.out.println(VERMELHO + "            💥  🚢  💥" + RESET_COR);
+        System.out.println(VERMELHO + "           /    💥    \\" + RESET_COR);
     }
 
     public void fechar() {
