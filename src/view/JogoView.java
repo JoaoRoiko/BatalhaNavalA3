@@ -9,9 +9,12 @@ import model.Tabuleiro;
  */
 public class JogoView {
     private static final String VERMELHO = "\u001B[31m";
+    private static final String VERDE = "\u001B[32m";
     private static final String DOURADO = "\u001B[33m";
     private static final String AZUL_ESCURO = "\u001B[34m";
+    private static final String CIANO = "\u001B[36m";
     private static final String AZUL_CLARO = "\u001B[94m";
+    private static final String NEGRITO = "\u001B[1m";
     private static final String RESET_COR = "\u001B[0m";
 
     private final Scanner scanner;
@@ -20,19 +23,30 @@ public class JogoView {
         scanner = new Scanner(System.in);
     }
 
+    public void exibirBoasVindas() {
+        System.out.println();
+        System.out.println(DOURADO + "==============================================" + RESET_COR);
+        System.out.println(DOURADO + "   ⚓   B A T A L H A   N A V A L   ⚓" + RESET_COR);
+        System.out.println(DOURADO + "        🧑 você  vs  computador 🤖" + RESET_COR);
+        System.out.println(DOURADO + "==============================================" + RESET_COR);
+    }
+
     public int exibirMenuInicial() {
-        System.out.println("\n=== BATALHA NAVAL ===");
-        System.out.println("1 - Nova partida");
-        System.out.println("2 - Carregar partida salva");
-        System.out.println("0 - Sair");
-        return lerInteiro("Escolha: ", 0, 2);
+        System.out.println();
+        System.out.println(NEGRITO + "🏠 MENU PRINCIPAL" + RESET_COR);
+        System.out.println("   1 - 🎮 Nova partida");
+        System.out.println("   2 - 💾 Carregar partida salva");
+        System.out.println("   0 - 🚪 Sair");
+        return lerInteiro("👉 Escolha: ", 0, 2);
     }
 
     public int exibirMenuTurno() {
-        System.out.println("\n1 - Fazer disparo");
-        System.out.println("2 - Salvar e sair");
-        System.out.println("3 - Carregar partida salva");
-        return lerInteiro("Escolha: ", 1, 3);
+        System.out.println();
+        System.out.println(NEGRITO + "🎯 O QUE VOCÊ QUER FAZER?" + RESET_COR);
+        System.out.println("   1 - 💥 Atirar");
+        System.out.println("   2 - 💾 Salvar e sair");
+        System.out.println("   3 - 📂 Carregar partida salva");
+        return lerInteiro("👉 Escolha: ", 1, 3);
     }
 
     public void exibirMensagem(String mensagem) {
